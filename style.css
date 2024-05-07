@@ -30,6 +30,7 @@ h1 {
     font-size: 32px;
     color: var(--gray); /* Colore del titolo */
     margin-bottom: 40px;
+    font-weight: 700;
 }
 
 p {
@@ -111,4 +112,56 @@ nav{
     background-color: var(--lightBrown);
     width: 100vw;
     margin-bottom: 10px;
+}
+
+.card-container{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 80vw;
+    gap: 20px;
+}
+
+.card{
+    width: 600px;
+    height: 200px;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.card ul{
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+}
+
+.card h3{
+    font-weight: 700;
+}
+
+.card li{
+    background-color: var(--brown);
+    width: 150px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    text-align: center;
+    transition: .5s;
+    cursor: pointer;
+}
+
+.card li:hover{
+    background-color: var(--darkBrown);
+}
+
+.card a{
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
 }
