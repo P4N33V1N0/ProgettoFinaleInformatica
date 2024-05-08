@@ -4,69 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifica Libro</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #D9B589;
-            min-width: 200px;
-            border: 1px solid #ddd;
-            z-index: 1;
-        }
-
-        .dropdown-content a {
-            padding: 12px 16px;
-            display: block;
-        }
-
-        .dropdown-content a:hover {
-            background-color: #D9B589;
-        }
-
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-
-        .checkbox-label {
-            display: block;
-        }
-
-        .checkbox-label input[type="checkbox"] {
-            display: inline-block;
-            margin-right: 5px;
-        }
-
-        /* Aggiunta di un'icona di freccia verso il basso */
-        .dropdown-icon {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            background-image: url('https://png.pngtree.com/png-vector/20190419/ourmid/pngtree-vector-down-arrow-icon-png-image_956681.jpg'); /* URL dell'icona di freccia verso il basso */
-            background-size: cover;
-            margin-left: 5px;
-            cursor: pointer;
-        }
-    </style>
+    <link rel="stylesheet" href="stylesheet/style.css">
+    <link rel="stylesheet" href="stylesheet/dropdown.css">
 </head>
 <body>
     <h1>Modifica Libro</h1>
 
     <?php
-    include 'connection.php'; // Includi il file per la connessione al database
+    include 'connection.php';
 
-    // Verifica se è stato fornito un ID di libro valido tramite URL
     if(isset($_GET['id']) && !empty($_GET['id'])) {
         $book_id = $_GET['id'];
 
-        // Recupera i dati del libro dal database utilizzando l'ID del libro
-        $book_sql = "SELECT * FROM Libro WHERE Codice = $book_id";
-        $book_result = $conn->query($book_sql);
+        $book_sql = $conn->prepare("SELECT * FROM Libro WHERE Codice = ?");
+        $book_sql->bind_param("i",$book_id);
+        $book_sql->execute();
+        $book_result = $book_sql->get_result();
 
         if ($book_result->num_rows > 0) {
             $book_row = $book_result->fetch_assoc();
@@ -87,7 +40,7 @@
 
                 <div class="dropdown">
                     <label for="autori">Autori:</label>
-                    <div class="dropdown-icon"></div> <!-- Aggiunta dell'icona di freccia verso il basso -->
+                    <div class="dropdown-icon"></div> 
                     <div class="dropdown-content">
                         <?php
                         $autori_sql = "SELECT * FROM Autore";
@@ -96,10 +49,11 @@
                         if ($autori_result->num_rows > 0) {
                             while($autore_row = $autori_result->fetch_assoc()) {
                                 $checked = '';
-                                // Verifica se l'autore è associato al libro
                                 $autore_id = $autore_row['Codice'];
-                                $autore_checked_sql = "SELECT * FROM Scrive WHERE CodiceLibro = $book_id AND CodiceAutore = $autore_id";
-                                $autore_checked_result = $conn->query($autore_checked_sql);
+                                $autore_checked_sql = $conn->prepare("SELECT * FROM Scrive WHERE CodiceLibro = ? AND CodiceAutore = ?");
+                                $autore_checked_sql->bind_param("ii",$book_id,$autore_id);
+                                $autore_checked_sql->execute();
+                                $autore_checked_result = $autore_checked_sql->get_result();
                                 if ($autore_checked_result->num_rows > 0) {
                                     $checked = 'checked';
                                 }
@@ -113,7 +67,6 @@
                 <input type="submit" name="submit" value="Salva Modifiche">
             </form>
             <?php
-            // Processa il modulo di modifica del libro
             if(isset($_POST['submit'])) {
                 $titolo = $_POST['titolo'];
                 $num_pagine = $_POST['num_pagine'];
@@ -121,18 +74,17 @@
                 $anno_pubblicazione = $_POST['anno_pubblicazione'];
                 $autori_selezionati = $_POST['autori'];
 
-                // Esegui l'aggiornamento dei dati del libro nel database
-                $update_book_sql = "UPDATE Libro SET Titolo='$titolo', NumPagine='$num_pagine', Genere='$genere', AnnoPubbl='$anno_pubblicazione' WHERE Codice=$book_id";
+                $update_book_sql = $conn->prepare("UPDATE Libro SET Titolo=?, NumPagine=?, Genere=?, AnnoPubbl=? WHERE Codice=?");
+                $update_book_sql->bind_param("sisii", $titolo,$num_pagine,$genere,$anno_pubblicazione,$book_id);
+                if ($update_book_sql->execute() === TRUE) {
+                    $delete_autori_sql = $conn->prepare("DELETE FROM Scrive WHERE CodiceLibro=?");
+                    $delete_autori_sql->bind_param("i",$book_id);
+                    $delete_autori_sql->execute();
 
-                if ($conn->query($update_book_sql) === TRUE) {
-                    // Elimina gli autori precedenti associati al libro
-                    $delete_autori_sql = "DELETE FROM Scrive WHERE CodiceLibro=$book_id";
-                    $conn->query($delete_autori_sql);
-
-                    // Associa gli autori selezionati al libro
                     foreach($autori_selezionati as $autore_id) {
-                        $insert_scrive_sql = "INSERT INTO Scrive (CodiceLibro, CodiceAutore) VALUES ('$book_id', '$autore_id')";
-                        $conn->query($insert_scrive_sql);
+                        $insert_scrive_sql = $conn->prepare("INSERT INTO Scrive (CodiceLibro, CodiceAutore) VALUES (?, ?)");
+                        $insert_scrive_sql->bind_param("ii",$book_id,$autore_id);
+                        $insert_scrive_sql->execute();
                     }
 
                     echo "<p>Libro modificato con successo!</p>";
@@ -147,7 +99,6 @@
         echo "ID di libro non fornito.";
     }
 
-    // Chiudi la connessione al database
     $conn->close();
     ?>
 </body>

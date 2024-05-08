@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifica Libro</title>
+    <link rel="stylesheet" href="stylesheet/style.css">
+    <link rel="stylesheet" href="stylesheet/dropdown.css">
 </head>
 <body>
     <h1>Modifica Libro</h1>
@@ -36,28 +38,30 @@
                 <label for="anno_pubblicazione">Anno Pubblicazione:</label>
                 <input type="number" id="anno_pubblicazione" name="anno_pubblicazione" value="<?php echo $book_row['AnnoPubbl']; ?>" required><br><br>
 
-                <label for="autori">Autori:</label><br>
-                <?php
-                // Ottieni la lista degli autori dal database
-                $autori_sql = "SELECT * FROM Autore";
-                $autori_result = $conn->query($autori_sql);
-
-                if ($autori_result->num_rows > 0) {
-                    while($autore_row = $autori_result->fetch_assoc()) {
-                        $checked = '';
-                        // Verifica se l'autore è associato al libro
-                        $autore_id = $autore_row['Codice'];
-                        $autore_checked_sql = "SELECT * FROM Scrive WHERE CodiceLibro = $book_id AND CodiceAutore = $autore_id";
-                        $autore_checked_result = $conn->query($autore_checked_sql);
-                        if ($autore_checked_result->num_rows > 0) {
-                            $checked = 'checked';
+                <div class="dropdown">
+                    <label for="autori">Autori:</label>
+                    <div class="dropdown-icon"></div> <!-- Aggiunta dell'icona di freccia verso il basso -->
+                    <div class="dropdown-content">
+                        <?php
+                        $autori_sql = "SELECT * FROM Autore";
+                        $autori_result = $conn->query($autori_sql);
+        
+                        if ($autori_result->num_rows > 0) {
+                            while($autore_row = $autori_result->fetch_assoc()) {
+                                $checked = '';
+                                // Verifica se l'autore è associato al libro
+                                $autore_id = $autore_row['Codice'];
+                                $autore_checked_sql = "SELECT * FROM Scrive WHERE CodiceLibro = $book_id AND CodiceAutore = $autore_id";
+                                $autore_checked_result = $conn->query($autore_checked_sql);
+                                if ($autore_checked_result->num_rows > 0) {
+                                    $checked = 'checked';
+                                }
+                                echo "<label class='checkbox-label'><input type='checkbox' name='autori[]' value='".$autore_row["Codice"]."' $checked>".$autore_row["Nome"]." ".$autore_row["Cognome"]."</label>";
+                            }
                         }
-                        echo "<input type='checkbox' id='autore_$autore_id' name='autori[]' value='$autore_id' $checked>
-                            <label for='autore_$autore_id'>".$autore_row['Nome']." ".$autore_row['Cognome']."</label><br>";
-                    }
-                }
-                ?>
-                <br>
+                        ?>
+                    </div>
+                </div><br><br>
 
                 <input type="submit" name="submit" value="Salva Modifiche">
             </form>

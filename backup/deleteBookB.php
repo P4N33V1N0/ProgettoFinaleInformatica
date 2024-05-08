@@ -11,20 +11,22 @@
     <h1>Delete Book</h1>
 
     <?php
-    include 'connection.php'; 
+    include 'connection.php'; // Includi il file per la connessione al database
 
+    // Verifica se è stato fornito un ID del libro da eliminare
     
     if(isset($_GET['id']) && !empty($_GET['id'])) {
         $id = $_GET['id'];
-        $sql = $conn->prepare("SELECT * FROM Libro WHERE Codice = ?");
-        $sql->bind_param("i",$id);
-        $sql->execute();
-        $result = $sql->get_result();
+        // Esegui la query per ottenere i dettagli del libro da eliminare
+        $sql = "SELECT * FROM Libro WHERE Codice = $id";
+        $result = $conn->query($sql);
 
         if ($result->num_rows == 1) {
+            // Ottieni i dettagli del libro
             $row = $result->fetch_assoc();
             $titolo = $row['Titolo'];
 
+            // Conferma dell'utente prima di procedere con l'eliminazione
             echo "<p>Sei sicuro di voler eliminare il libro '$titolo'?</p>";
             echo "<form class='centered' method='post' style='gap: 15px'>
                     <input type='hidden' name='id' value='$id'>
@@ -32,13 +34,14 @@
                     <a href='booksList.php'><button type='button'>Annulla</button></a>
                 </form>";
 
+            // Gestione dell'eliminazione del libro dopo la conferma dell'utente
             if(isset($_POST['confirm'])) {
-                $delete_scrive_sql = $conn->prepare("DELETE FROM Scrive WHERE CodiceLibro=?");
-                $delete_scrive_sql->bind_param("i",$id);
-                if ($delete_scrive_sql->execute() === TRUE) {
-                    $delete_book_sql = $conn->prepare("DELETE FROM Libro WHERE Codice=?");
-                    $delete_book_sql->bind_param("i",$id);
-                    if ($delete_book_sql->execute() === TRUE) {
+                // Elimina tutte le istanze di associazione tra il libro e gli autori nella tabella Scrive
+                $delete_scrive_sql = "DELETE FROM Scrive WHERE CodiceLibro=$id";
+                if ($conn->query($delete_scrive_sql) === TRUE) {
+                    // Elimina il libro dalla tabella Libro
+                    $delete_book_sql = "DELETE FROM Libro WHERE Codice=$id";
+                    if ($conn->query($delete_book_sql) === TRUE) {
                         echo "<p>Libro eliminato con successo!</p>";
                     } else {
                         echo "Errore nell'eliminazione del libro: " . $conn->error;
@@ -55,6 +58,7 @@
     ?>
 
     <?php
+    // Chiudi la connessione al database
     $conn->close();
     ?>
 </body>
