@@ -20,7 +20,7 @@
     $books_result = $conn->query($books_sql);
 
     if ($books_result->num_rows > 0) {
-        echo "<table border='1'>
+        echo "<table class='custom-table1'>
                 <tr>
                     <th>Titolo</th>
                     <th>Autori</th>
