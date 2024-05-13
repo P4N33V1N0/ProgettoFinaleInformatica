@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Apr 24, 2024 alle 13:45
--- Versione del server: 10.4.25-MariaDB
--- Versione PHP: 8.1.10
+-- Creato il: Mag 13, 2024 alle 20:27
+-- Versione del server: 10.4.27-MariaDB
+-- Versione PHP: 8.2.0
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -35,7 +35,19 @@ CREATE TABLE `autore` (
   `Cognome` varchar(255) DEFAULT NULL,
   `DataNascita` date DEFAULT NULL,
   `Nazionalita` varchar(100) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `autore`
+--
+
+INSERT INTO `autore` (`Codice`, `Nome`, `Cognome`, `DataNascita`, `Nazionalita`) VALUES
+(1, 'Giuseppe ', 'Festa', '1972-05-03', 'Italiana'),
+(2, 'Primo ', 'Levi', '1919-07-01', 'Italiana'),
+(3, 'Gabriele ', 'D\'Annunzio', '1863-03-12', 'Italiana'),
+(4, 'Italo ', 'Svevo', '1861-12-19', 'Italiana'),
+(5, 'Luigi', ' Pirandello', '1867-06-28', 'Italiana'),
+(6, 'Giuseppe', 'Ungaretti', '1888-02-08', 'Italiana');
 
 -- --------------------------------------------------------
 
@@ -47,8 +59,9 @@ CREATE TABLE `copialibro` (
   `Codice` int(11) NOT NULL,
   `Codizioni` varchar(255) DEFAULT NULL,
   `Stato` varchar(50) DEFAULT NULL,
+  `numPagine` int(11) NOT NULL,
   `CodiceLibro` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -58,10 +71,19 @@ CREATE TABLE `copialibro` (
 
 CREATE TABLE `libro` (
   `Codice` int(11) NOT NULL,
-  `NumPagine` int(11) DEFAULT NULL,
+  `Titolo` varchar(30) NOT NULL,
   `Genere` varchar(100) DEFAULT NULL,
   `AnnoPubbl` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `libro`
+--
+
+INSERT INTO `libro` (`Codice`, `Titolo`, `Genere`, `AnnoPubbl`) VALUES
+(6, 'Prova', 'Comico', 2000),
+(7, 'Prova', 'Comico', 2000),
+(9, 'Piove', 'Comico', -24);
 
 -- --------------------------------------------------------
 
@@ -76,7 +98,7 @@ CREATE TABLE `prestito` (
   `DataRestituzione` date DEFAULT NULL,
   `CodUtente` int(11) DEFAULT NULL,
   `CodCopiaLibro` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -87,7 +109,23 @@ CREATE TABLE `prestito` (
 CREATE TABLE `scrive` (
   `CodiceLibro` int(11) NOT NULL,
   `CodiceAutore` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `scrive`
+--
+
+INSERT INTO `scrive` (`CodiceLibro`, `CodiceAutore`) VALUES
+(6, 1),
+(6, 2),
+(7, 1),
+(7, 2),
+(9, 1),
+(9, 2),
+(9, 3),
+(9, 4),
+(9, 5),
+(9, 6);
 
 -- --------------------------------------------------------
 
@@ -104,7 +142,14 @@ CREATE TABLE `utente` (
   `DataNascita` date DEFAULT NULL,
   `Email` varchar(255) DEFAULT NULL,
   `Tel` varchar(20) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `utente`
+--
+
+INSERT INTO `utente` (`Codice`, `Username`, `Password`, `Nome`, `Cognome`, `DataNascita`, `Email`, `Tel`) VALUES
+(1, 'Gabri', 'Gabri', 'Gabriele', 'Chini', '1980-05-06', 'gabriele.chini@gmail.com', '3333333333');
 
 --
 -- Indici per le tabelle scaricate
@@ -158,7 +203,7 @@ ALTER TABLE `utente`
 -- AUTO_INCREMENT per la tabella `autore`
 --
 ALTER TABLE `autore`
-  MODIFY `Codice` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT per la tabella `copialibro`
@@ -170,7 +215,7 @@ ALTER TABLE `copialibro`
 -- AUTO_INCREMENT per la tabella `libro`
 --
 ALTER TABLE `libro`
-  MODIFY `Codice` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT per la tabella `prestito`
@@ -182,7 +227,7 @@ ALTER TABLE `prestito`
 -- AUTO_INCREMENT per la tabella `utente`
 --
 ALTER TABLE `utente`
-  MODIFY `Codice` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Limiti per le tabelle scaricate

@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aggiungi Libro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="stylesheet/style.css">
     <link rel="stylesheet" href="stylesheet/dropdown.css">
-
 </head>
 <body>
+    <?php
+        include "navbar.php";
+    ?> 
     <h1>Aggiungi Libro</h1>
 
     <?php
@@ -16,12 +20,11 @@
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $titolo = $_POST['titolo'];
-        $num_pagine = $_POST['num_pagine'];
         $genere = $_POST['genere'];
         $anno_pubblicazione = $_POST['anno_pubblicazione'];
 
-        $insert_book_sql = $conn->prepare("INSERT INTO Libro (Titolo, NumPagine, Genere, AnnoPubbl) VALUES (?, ?, ?, ?)");
-        $insert_book_sql->bind_param("sisi",$titolo,$num_pagine,$genere,$anno_pubblicazione);
+        $insert_book_sql = $conn->prepare("INSERT INTO Libro (Titolo, Genere, AnnoPubbl) VALUES (?, ?, ?)");
+        $insert_book_sql->bind_param("sss", $titolo, $genere, $anno_pubblicazione);
         if ($insert_book_sql->execute() === TRUE) {
             $book_id = $conn->insert_id; 
 
@@ -45,9 +48,6 @@
     <form method="post">
         <label for="titolo">Titolo:</label>
         <input type="text" id="titolo" name="titolo" required><br><br>
-
-        <label for="num_pagine">Numero Pagine:</label>
-        <input type="number" id="num_pagine" name="num_pagine" required><br><br>
 
         <label for="genere">Genere:</label>
         <input type="text" id="genere" name="genere" required><br><br>

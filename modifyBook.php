@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifica Libro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="stylesheet/style.css">
     <link rel="stylesheet" href="stylesheet/dropdown.css">
 </head>
 <body>
+    <?php
+        include "navbar.php";
+    ?> 
     <h1>Modifica Libro</h1>
 
     <?php
@@ -28,9 +33,6 @@
                 <input type="hidden" name="book_id" value="<?php echo $book_id; ?>">
                 <label for="titolo">Titolo:</label>
                 <input type="text" id="titolo" name="titolo" value="<?php echo $book_row['Titolo']; ?>" required><br><br>
-
-                <label for="num_pagine">Numero Pagine:</label>
-                <input type="number" id="num_pagine" name="num_pagine" value="<?php echo $book_row['NumPagine']; ?>" required><br><br>
 
                 <label for="genere">Genere:</label>
                 <input type="text" id="genere" name="genere" value="<?php echo $book_row['Genere']; ?>" required><br><br>
@@ -69,13 +71,12 @@
             <?php
             if(isset($_POST['submit'])) {
                 $titolo = $_POST['titolo'];
-                $num_pagine = $_POST['num_pagine'];
                 $genere = $_POST['genere'];
                 $anno_pubblicazione = $_POST['anno_pubblicazione'];
                 $autori_selezionati = $_POST['autori'];
 
-                $update_book_sql = $conn->prepare("UPDATE Libro SET Titolo=?, NumPagine=?, Genere=?, AnnoPubbl=? WHERE Codice=?");
-                $update_book_sql->bind_param("sisii", $titolo,$num_pagine,$genere,$anno_pubblicazione,$book_id);
+                $update_book_sql = $conn->prepare("UPDATE Libro SET Titolo=?, Genere=?, AnnoPubbl=? WHERE Codice=?");
+                $update_book_sql->bind_param("ssii", $titolo, $genere, $anno_pubblicazione, $book_id);
                 if ($update_book_sql->execute() === TRUE) {
                     $delete_autori_sql = $conn->prepare("DELETE FROM Scrive WHERE CodiceLibro=?");
                     $delete_autori_sql->bind_param("i",$book_id);

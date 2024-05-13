@@ -42,7 +42,6 @@
             <h3>Gestione Copie Libri</h3>
             <ul>
                 <li><a href="addCopy.php">Aggiungi Copia Libro</a></li>
-                <li><a href="modifyCopy.php">Modifica Copia Libro</a></li>
                 <li><a href="copiesList.php">Visualizza Copie Libro</a></li>
             </ul>
         </div>
@@ -51,7 +50,6 @@
             <h3>Gestione Autori</h3>
             <ul>
                 <li><a href="addAuthor.php">Aggiungi Autore</a></li>
-                <li><a href="modifyAuthor.php">Modifica Autore</a></li>
                 <li><a href="authorsList.php">Lista Autori</a></li>
             </ul>
         </div>
@@ -60,7 +58,6 @@
             <h3>Gestione Utenti</h3>
             <ul>
                 <li><a href="addUser.php">Aggiungi Utente</a></li>
-                <li><a href="modifyUser.php">Modifica Utente</a></li>
                 <li><a href="usersList.php">Visualizza Elenco Utenti</a></li>
             </ul>
         </div>
@@ -69,8 +66,9 @@
             <h3>Gestione Prenotazioni</h3>
             <ul>
                 <li><a href="addReservation.php">Nuova Prenotazione</a></li>
-                <li><a href="modifyReservation.php">Modifica Prenotazione</a></li>
+                <li><a href="reservationsList.php">Elenco Prenotazioni Attive</a></li>
                 <li><a href="reservationsList.php">Elenco Prenotazioni</a></li>
+
             </ul>
         </div>
     </div>
