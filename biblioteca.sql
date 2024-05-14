@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Creato il: Mag 13, 2024 alle 20:27
+-- Creato il: Mag 14, 2024 alle 22:33
 -- Versione del server: 10.4.27-MariaDB
 -- Versione PHP: 8.2.0
 
@@ -42,12 +42,13 @@ CREATE TABLE `autore` (
 --
 
 INSERT INTO `autore` (`Codice`, `Nome`, `Cognome`, `DataNascita`, `Nazionalita`) VALUES
-(1, 'Giuseppe ', 'Festa', '1972-05-03', 'Italiana'),
+(1, 'Giuseppe ', 'Festa', '1972-05-03', 'Svizzera'),
 (2, 'Primo ', 'Levi', '1919-07-01', 'Italiana'),
 (3, 'Gabriele ', 'D\'Annunzio', '1863-03-12', 'Italiana'),
 (4, 'Italo ', 'Svevo', '1861-12-19', 'Italiana'),
 (5, 'Luigi', ' Pirandello', '1867-06-28', 'Italiana'),
-(6, 'Giuseppe', 'Ungaretti', '1888-02-08', 'Italiana');
+(6, 'Giuseppe', 'Ungaretti', '1888-02-08', 'Italiana'),
+(7, 'gabriele', 'Chini', '2024-05-14', 'Italiana');
 
 -- --------------------------------------------------------
 
@@ -57,11 +58,18 @@ INSERT INTO `autore` (`Codice`, `Nome`, `Cognome`, `DataNascita`, `Nazionalita`)
 
 CREATE TABLE `copialibro` (
   `Codice` int(11) NOT NULL,
-  `Codizioni` varchar(255) DEFAULT NULL,
-  `Stato` varchar(50) DEFAULT NULL,
+  `Condizioni` varchar(255) DEFAULT NULL,
   `numPagine` int(11) NOT NULL,
   `CodiceLibro` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `copialibro`
+--
+
+INSERT INTO `copialibro` (`Codice`, `Condizioni`, `numPagine`, `CodiceLibro`) VALUES
+(1, 'Ottime', 130, 9),
+(2, 'Buone', 300, 7);
 
 -- --------------------------------------------------------
 
@@ -99,6 +107,16 @@ CREATE TABLE `prestito` (
   `CodUtente` int(11) DEFAULT NULL,
   `CodCopiaLibro` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dump dei dati per la tabella `prestito`
+--
+
+INSERT INTO `prestito` (`Codice`, `DataInizio`, `DataScadenza`, `DataRestituzione`, `CodUtente`, `CodCopiaLibro`) VALUES
+(1, '2024-05-14', '2024-06-14', '2024-05-14', 3, 1),
+(2, '2024-06-07', '2024-07-07', '2024-05-14', 3, 1),
+(3, '2024-05-02', '2024-05-02', '2024-05-14', 4, 1),
+(7, '2024-05-31', '2024-07-01', NULL, 4, 2);
 
 -- --------------------------------------------------------
 
@@ -149,7 +167,8 @@ CREATE TABLE `utente` (
 --
 
 INSERT INTO `utente` (`Codice`, `Username`, `Password`, `Nome`, `Cognome`, `DataNascita`, `Email`, `Tel`) VALUES
-(1, 'Gabri', 'Gabri', 'Gabriele', 'Chini', '1980-05-06', 'gabriele.chini@gmail.com', '3333333333');
+(3, 'faffa', '$2y$10$n7xkd2NgM1/LUzYX5NB5VOd0.CUC83UO55fgmqBxOPCnJBO43NLKy', 'gabriele', 'Chini', '2024-05-06', 'gabriele.chini@buonarroti.tn.it', '33333333333'),
+(4, 'fff', 'fff', 'fff', 'fff', '1980-05-06', 'fff', 'fff');
 
 --
 -- Indici per le tabelle scaricate
@@ -203,13 +222,13 @@ ALTER TABLE `utente`
 -- AUTO_INCREMENT per la tabella `autore`
 --
 ALTER TABLE `autore`
-  MODIFY `Codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `Codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT per la tabella `copialibro`
 --
 ALTER TABLE `copialibro`
-  MODIFY `Codice` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT per la tabella `libro`
@@ -221,13 +240,13 @@ ALTER TABLE `libro`
 -- AUTO_INCREMENT per la tabella `prestito`
 --
 ALTER TABLE `prestito`
-  MODIFY `Codice` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `Codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT per la tabella `utente`
 --
 ALTER TABLE `utente`
-  MODIFY `Codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `Codice` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Limiti per le tabelle scaricate

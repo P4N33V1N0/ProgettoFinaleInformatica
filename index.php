@@ -66,7 +66,7 @@
             <h3>Gestione Prenotazioni</h3>
             <ul>
                 <li><a href="addReservation.php">Nuova Prenotazione</a></li>
-                <li><a href="reservationsList.php">Elenco Prenotazioni Attive</a></li>
+                <li><a href="activeReservationsList.php">Elenco Prenotazioni Attive</a></li>
                 <li><a href="reservationsList.php">Elenco Prenotazioni</a></li>
 
             </ul>
