@@ -30,8 +30,8 @@
                 }
             } else {
                 echo "<p>Sei sicuro di voler eliminare questa prenotazione?</p>";
-                echo "<form method='post'>
-                        <input type='submit' name='confirm' value='Conferma'>
+                echo "<form class='centered' method='post' style='gap: 15px'>
+                        <button name='confirm' type='submit'>Conferma</button>
                       </form>";
             }
 

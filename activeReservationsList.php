@@ -26,7 +26,7 @@
     $result = $conn->query($query);
 
     if ($result->num_rows > 0) {
-        echo "<table class='custom-table1'>
+        echo "<table>
                 <tr>
                     <th>ID Prenotazione</th>
                     <th>Utente</th>
@@ -43,8 +43,8 @@
                     <td>".$row["DataInizio"]."</td>
                     <td>".$row["DataScadenza"]."</td>
                     <td>
-                        <a href='concludeReservation.php?reservation_id=".$row["Codice"]."' class='btn btn-primary'>Concludi Prenotazione</a>
-                        <a href='deleteReservation.php?reservation_id=".$row["Codice"]."' class='btn btn-danger'>Elimina Prenotazione</a>
+                        <a href='concludeReservation.php?reservation_id=".$row["Codice"]."'><button class='action-btn'><i class='fas fa-edit'></i></button></a>
+                        <a href='deleteReservation.php?reservation_id=".$row["Codice"]."'><button class='action-btn'><i class='fas fa-trash-alt'></i></button></a>
                     </td>
                 </tr>";
         }

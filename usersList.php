@@ -16,7 +16,7 @@
     $users_result = $conn->query($users_sql);
 
     if ($users_result->num_rows > 0) {
-        echo "<div class='container'>
+        echo "<div>
                 <h1>Lista Utenti</h1>
                 <table>
                     <thead>
@@ -42,8 +42,8 @@
                     <td>".$row["Email"]."</td>
                     <td>".$row["Tel"]."</td>
                     <td>
-                        <a href='modifyUser.php?id=".$row["Codice"]."'>Modifica</a>
-                        <a href='deleteUser.php?id=".$row["Codice"]."' onclick=\"return confirm('Sei sicuro di voler eliminare questo utente?')\">Elimina</a>
+                        <a href='modifyUser.php?id=".$row["Codice"]."'><button class='action-btn'><i class='fas fa-edit'></i></button></a>
+                        <a href='deleteUser.php?id=".$row["Codice"]."'><button class='action-btn'><i class='fas fa-trash-alt'></i></button></a>
                     </td>
                 </tr>";
         }

@@ -41,7 +41,7 @@
         <div class="card">
             <h3>Gestione Copie Libri</h3>
             <ul>
-                <li><a href="addCopy.php">Aggiungi Copia Libro</a></li>
+                <li><a href="addCopies.php">Aggiungi Copia Libro</a></li>
                 <li><a href="copiesList.php">Visualizza Copie Libro</a></li>
             </ul>
         </div>
@@ -67,7 +67,7 @@
             <ul>
                 <li><a href="addReservation.php">Nuova Prenotazione</a></li>
                 <li><a href="activeReservationsList.php">Elenco Prenotazioni Attive</a></li>
-                <li><a href="reservationsList.php">Elenco Prenotazioni</a></li>
+                <li><a href="reservationsList.php">Elenco Prenotazioni Concluse</a></li>
 
             </ul>
         </div>

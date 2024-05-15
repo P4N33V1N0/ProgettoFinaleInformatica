@@ -49,7 +49,7 @@
         $conn->close();
     }
     ?>
-    <div class="container">
+    <div>
         <h1>Aggiungi Utente</h1>
         <form method="post">
             <div class="mb-3">
@@ -84,7 +84,7 @@
                 <label for="tel" class="form-label">Telefono:</label>
                 <input type="tel" class="form-control" id="tel" name="tel" required>
             </div>
-            <button type="submit" class="btn btn-primary" name="submit">Aggiungi Utente</button>
+            <button type="submit" name="submit">Aggiungi Utente</button>
         </form>
     </div>
 </body>

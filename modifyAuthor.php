@@ -43,7 +43,7 @@
                         <label for="nazionalita" class="form-label">Nazionalità:</label>
                         <input type="text" class="form-control" id="nazionalita" name="nazionalita" value="<?php echo $author_row['Nazionalita']; ?>" required>
                     </div>
-                    <button type="submit" class="btn btn-primary" name="submit">Salva Modifiche</button>
+                    <button type="submit" name="submit">Salva Modifiche</button>
                 </form>
             </div>
             <?php

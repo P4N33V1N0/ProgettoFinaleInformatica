@@ -29,7 +29,7 @@
     }
     ?>
 
-    <div class="container">
+    <div>
         <h1>Aggiungi Autore</h1>
         <form method="post">
             <div class="mb-3">
@@ -48,7 +48,7 @@
                 <label for="nazionalita" class="form-label">Nazionalità</label>
                 <input type="text" class="form-control" id="nazionalita" name="nazionalita" required>
             </div>
-            <button type="submit" class="btn btn-primary">Aggiungi Autore</button>
+            <button type="submit">Aggiungi Autore</button>
         </form>
     </div>
 

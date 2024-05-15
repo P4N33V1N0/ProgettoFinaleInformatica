@@ -108,7 +108,7 @@ tr,th,td{
     border: 2px solid black;
 
 }
-nav{
+nav, .dropdown-nav{
     background-color: var(--lightBrown);
     width: 100vw;
     margin-bottom: 10px;

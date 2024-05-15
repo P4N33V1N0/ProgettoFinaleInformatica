@@ -19,7 +19,7 @@
     <?php
         include 'navbar.php';
     ?>
-    <div class="container">
+    <div>
         <h1>Aggiungi Prenotazione</h1>
 
         <?php
