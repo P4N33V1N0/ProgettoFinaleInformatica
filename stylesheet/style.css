@@ -8,15 +8,22 @@
 }
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: var(--white); /* Colore di sfondo */
+    /* background-color: var(--white); Colore di sfondo */
+    background-image: url(../img/library.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     color: var(--gray); /* Colore del testo */
     margin: 0;
     padding: 0;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     flex-direction: column;
     width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    backdrop-filter: blur(4px);
 }
 
 .container {
@@ -165,3 +172,4 @@ nav, .dropdown-nav{
     color: white;
     font-weight: 500;
 }
+

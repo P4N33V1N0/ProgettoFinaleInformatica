@@ -17,7 +17,7 @@
     $authors_result = $conn->query($authors_sql);
 
     if ($authors_result->num_rows > 0) {
-        echo "<div class='container'>";
+        echo "<div >";
         echo "<h1>Lista Autori</h1>";
         echo "<table >";
         echo "<thead><tr><th>Codice</th><th>Nome</th><th>Cognome</th><th>Data di Nascita</th><th>Nazionalità</th><th>Azioni</th></tr></thead>";
